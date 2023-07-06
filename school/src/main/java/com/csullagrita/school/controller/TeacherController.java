@@ -1,22 +1,28 @@
 package com.csullagrita.school.controller;
 
-import com.csullagrita.school.dto.TeacherDto;
+import com.csullagrita.school.api.TeacherControllerApi;
+import com.csullagrita.school.api.model.TeacherDto;
 import com.csullagrita.school.service.TeacherService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.NativeWebRequest;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/teachers")
-public class TeacherController {
+public class TeacherController implements TeacherControllerApi {
 
+    private final NativeWebRequest nativeWebRequest;
     private final TeacherService teacherService;
+    @Override
+    public Optional<NativeWebRequest> getRequest() {
+        return Optional.of(nativeWebRequest);
+    }
 
-    @GetMapping("/{id}")
-    public TeacherDto getTeacherById(@PathVariable("id") int teacherId) {
-        return teacherService.getStudentById(teacherId);
+    @Override
+    public ResponseEntity<TeacherDto> getTeacherById(Integer id) {
+        return ResponseEntity.ok(teacherService.getStudentById(id));
     }
 }

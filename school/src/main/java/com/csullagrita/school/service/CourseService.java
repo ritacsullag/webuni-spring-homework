@@ -1,5 +1,7 @@
 package com.csullagrita.school.service;
 
+import com.csullagrita.school.api.model.CourseDto;
+import com.csullagrita.school.mapper.CourseMapper;
 import com.csullagrita.school.model.*;
 import com.csullagrita.school.repository.CourseRepository;
 import com.querydsl.core.types.Predicate;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -32,6 +35,8 @@ public class CourseService {
     private final CourseRepository courseRepository;
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
+
+    private final CourseMapper courseMapper;
 //    @PersistenceContext
 //    private EntityManager entityManager;
 
@@ -53,7 +58,7 @@ public class CourseService {
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         AuditReader reader = AuditReaderFactory.get(entityManager);
-        return reader
+        List<HistoryData<Course>> historyDataList = reader
                 .createQuery()
                 .forRevisionsOfEntity(Course.class, false, true)
                 .add(AuditEntity.property("id").eq(courseId))
@@ -73,6 +78,17 @@ public class CourseService {
                             revisionEntity.getRevisionDate()
                     );
                 }).toList();
+
+        return historyDataList;
+//        List<HistoryData<CourseDto>> historyDtoList = new ArrayList<>();
+//
+//                historyDataList.forEach(hd -> historyDtoList.add(new HistoryData<>(
+//                courseMapper.courseToDto(hd.getData()),
+//                hd.getRevisionType(),
+//                hd.getRevision(),
+//                hd.getDate()
+//        )));
+//                return historyDtoList;
     }
 
     @Transactional

@@ -1,7 +1,7 @@
 package com.csullagrita.school.service;
 
+import com.csullagrita.school.api.model.StudentDto;
 import com.csullagrita.school.aspect.RetryHandler;
-import com.csullagrita.school.dto.StudentDto;
 import com.csullagrita.school.exception.SomethingWentWrongException;
 import com.csullagrita.school.mapper.StudentMapper;
 import com.csullagrita.school.repository.StudentRepository;

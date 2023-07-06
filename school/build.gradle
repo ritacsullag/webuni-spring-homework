@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.1.0'
     id 'io.spring.dependency-management' version '1.1.0'
     id "org.hibernate.orm" version "6.2.5.Final"
+    id "org.openapi.generator" version "6.6.0"
 }
 
 group = 'com.csullagrita'
@@ -20,6 +21,9 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
 }
 
 dependencies {
@@ -31,7 +35,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.infinispan:infinispan-hibernate-cache-v60'
-    //infinispan chache
+    //infinispan cache
     implementation 'org.infinispan:infinispan-spring6-embedded'
 
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
@@ -41,6 +45,14 @@ dependencies {
     //shedLock is for more scheduling-thread
     implementation 'net.javacrumbs.shedlock:shedlock-spring:5.5.0'
     implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.5.0'
+
+    //Create open-api doc
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    //openapi-generator
+    implementation "org.openapitools:openapi-generator-gradle-plugin:6.6.0"
+    implementation 'io.swagger:swagger-annotations:1.6.11'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'org.jetbrains:annotations:24.0.0'
 
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
@@ -54,15 +66,13 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     compileOnly 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-
 }
 
 
 sourceSets {
     main {
         java {
-            srcDirs = ['src/main/java']
+            srcDirs = ['src/main/java', "${buildDir}/generated/src/main/java/"]
         }
     }
 }
@@ -71,4 +81,17 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-
+openApiGenerate {
+    generatorName.set("spring")
+    inputSpec.set("$rootDir/src/main/openapi/api-docs.yaml")
+    outputDir.set("$buildDir/generated")
+    apiPackage.set("com.csullagrita.school.api")
+    modelPackage.set("com.csullagrita.school.api.model")
+    configOptions.set([
+            useTags: true.toString(),
+            dateLibrary: "java8-datetime",
+            configPackage: "com.csullagrita.school.api.model",
+            interfaceOnly: true.toString(),
+            useSpringBoot3: true.toString()
+    ])
+}

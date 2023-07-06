@@ -1,6 +1,6 @@
 package com.csullagrita.school.mapper;
 
-import com.csullagrita.school.dto.StudentDto;
+import com.csullagrita.school.api.model.StudentDto;
 import com.csullagrita.school.model.Student;
 import org.mapstruct.Mapper;
 

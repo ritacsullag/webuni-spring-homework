@@ -1,6 +1,6 @@
 package com.csullagrita.school.service;
 
-import com.csullagrita.school.dto.TeacherDto;
+import com.csullagrita.school.api.model.TeacherDto;
 import com.csullagrita.school.mapper.TeacherMapper;
 import com.csullagrita.school.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
