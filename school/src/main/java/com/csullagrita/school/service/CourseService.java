@@ -1,6 +1,5 @@
 package com.csullagrita.school.service;
 
-import com.csullagrita.school.api.model.CourseDto;
 import com.csullagrita.school.mapper.CourseMapper;
 import com.csullagrita.school.model.*;
 import com.csullagrita.school.repository.CourseRepository;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -92,7 +90,7 @@ public class CourseService {
     }
 
     @Transactional
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public Course getVersionAt(int id, OffsetDateTime when) {
         long epochMillis = when.toInstant().toEpochMilli();
         AuditProperty<Object> timestampProperty = AuditEntity.revisionProperty("timestamp");
@@ -107,7 +105,7 @@ public class CourseService {
                 .setMaxResults(1)
                 .getResultList();
 
-        if(!resultList.isEmpty()) {
+        if (!resultList.isEmpty()) {
             Course course = (Course) resultList.get(0);
             course.getStudents().size();
             course.getTeachers().size();

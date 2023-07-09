@@ -17,7 +17,11 @@ create table course_teachers
     teachers_id integer not null,
     primary key (courses_id, teachers_id)
 );
-alter table if exists course_students add constraint FK532dg5ikp3dvbrbiiqefdoe6m foreign key (students_id) references student;
-alter table if exists course_students add constraint FKh6irfl8rj4jgb3xrlyxsr2bdk foreign key (courses_id) references course;
-alter table if exists course_teachers add constraint FKe3n62rwx3uc1yucgkmw6gjkm5 foreign key (teachers_id) references teacher;
-alter table if exists course_teachers add constraint FK5ntgqv47cbgq8s0la1myeg5ly foreign key (courses_id) references course;
+alter table if exists course_students
+    add constraint FK532dg5ikp3dvbrbiiqefdoe6m foreign key (students_id) references student;
+alter table if exists course_students
+    add constraint FKh6irfl8rj4jgb3xrlyxsr2bdk foreign key (courses_id) references course;
+alter table if exists course_teachers
+    add constraint FKe3n62rwx3uc1yucgkmw6gjkm5 foreign key (teachers_id) references teacher;
+alter table if exists course_teachers
+    add constraint FK5ntgqv47cbgq8s0la1myeg5ly foreign key (courses_id) references course;

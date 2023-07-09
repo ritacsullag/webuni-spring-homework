@@ -1,7 +1,6 @@
 package com.csullagrita.school.mapper;
 
 
-
 import com.csullagrita.school.api.model.CourseDto;
 import com.csullagrita.school.api.model.HistoryDataCourseDto;
 import com.csullagrita.school.model.Course;

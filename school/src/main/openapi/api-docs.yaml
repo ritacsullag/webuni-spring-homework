@@ -3,21 +3,21 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: http://localhost:8080
-  description: Generated server url
+  - url: http://localhost:8080
+    description: Generated server url
 paths:
   /api/courses/{id}/modify:
     put:
       tags:
-      - course-controller
+        - course-controller
       operationId: saveChange
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       requestBody:
         content:
           application/json:
@@ -34,15 +34,15 @@ paths:
   /api/teachers/{id}:
     get:
       tags:
-      - teacher-controller
+        - teacher-controller
       operationId: getTeacherById
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "200":
           description: OK
@@ -53,15 +53,15 @@ paths:
   /api/students/{id}:
     get:
       tags:
-      - student-controller
+        - student-controller
       operationId: getStudentById
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "200":
           description: OK
@@ -72,21 +72,21 @@ paths:
   /api/courses/{id}/versions:
     get:
       tags:
-      - course-controller
+        - course-controller
       operationId: getVersionAt
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: at
-        in: query
-        required: true
-        schema:
-          type: string
-          format: date-time
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: at
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
       responses:
         "200":
           description: OK
@@ -97,15 +97,15 @@ paths:
   /api/courses/{id}/history:
     get:
       tags:
-      - course-controller
+        - course-controller
       operationId: getCourseHistoryById
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "200":
           description: OK
@@ -118,44 +118,44 @@ paths:
   /api/courses/search:
     get:
       tags:
-      - course-controller
+        - course-controller
       operationId: searchCourse
       parameters:
-      - name: id
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int64
-      - name: name
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: full
-        in: query
-        required: false
-        schema:
-          type: boolean
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: size
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: sort
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: name
+          in: query
+          required: false
+          schema:
             type: string
+        - name: full
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         "200":
           description: OK
@@ -222,9 +222,9 @@ components:
         revisionType:
           type: string
           enum:
-          - ADD
-          - MOD
-          - DEL
+            - ADD
+            - MOD
+            - DEL
         revision:
           type: integer
           format: int32

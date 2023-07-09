@@ -40,14 +40,14 @@ public class CourseController implements CourseControllerApi {
     private final QuerydslPredicateArgumentResolver predicateResolver;
 
     //mert kell egy methodparameter, aminek megmondjuk hanyadik parametere a pageable
-    public void configPageable(@SortDefault("id") Pageable pageable){};
+    public void configPageable(@SortDefault("id") Pageable pageable) {}
 
-    public void configurePredicate(@QuerydslPredicate(root=Course.class)Predicate predicate){};
+    public void configurePredicate(@QuerydslPredicate(root = Course.class) Predicate predicate) {}
 
     @Override
     public ResponseEntity<List<CourseDto>> searchCourse(Long id, String name, Boolean full, Integer page, Integer size, List<String> sort) {
-        Pageable pageable = createPageable("configPageable");
-        Predicate predicate = createPredicate("configurePredicate");
+        Pageable pageable = createPageable();
+        Predicate predicate = createPredicate();
 
         boolean isFull = full == null ? false : full;
         if (isFull) {
@@ -57,10 +57,10 @@ public class CourseController implements CourseControllerApi {
         }
     }
 
-    private Predicate createPredicate(String configPredicateName){
-        Method method = null;
+    private Predicate createPredicate() {
+        Method method;
         try {
-            method = this.getClass().getMethod(configPredicateName, Predicate.class);
+            method = this.getClass().getMethod("configurePredicate", Predicate.class);
             MethodParameter methodParameter = new MethodParameter(method, 0);
             return (Predicate) predicateResolver.resolveArgument(methodParameter, null, nativeWebRequest, null);
         } catch (Exception e) {
@@ -68,11 +68,11 @@ public class CourseController implements CourseControllerApi {
         }
     }
 
-    private Pageable createPageable(String configPageableName) {
+    private Pageable createPageable() {
         Pageable pageable;
-        Method method = null;
+        Method method;
         try {
-            method = this.getClass().getMethod(configPageableName, Pageable.class);
+            method = this.getClass().getMethod("configPageable", Pageable.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }

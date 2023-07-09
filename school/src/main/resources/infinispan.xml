@@ -12,12 +12,12 @@
 
 
     <!-- This configuration is suitable for non-clustered environments, where only single instance accesses the DB -->
-    <cache-container name="SpringCacheManager" >
-       <local-cache name="pagableCoursesWithRelations">
-           <transaction mode="NONE"/>
-           <expiration max-idle="30000" interval="2000"/>
-           <memory max-count="10000"/>
-       </local-cache>
+    <cache-container name="SpringCacheManager">
+        <local-cache name="pagableCoursesWithRelations">
+            <transaction mode="NONE"/>
+            <expiration max-idle="30000" interval="2000"/>
+            <memory max-count="10000"/>
+        </local-cache>
     </cache-container>
 
 </infinispan>

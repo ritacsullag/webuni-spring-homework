@@ -60,9 +60,9 @@ public class CourseControllerOld {
     }
 
     @GetMapping(value = "/{id}/versions", params = "at")
-	public ResponseEntity<CourseDto> getVersionAt(@PathVariable int id, @RequestParam OffsetDateTime at){
-		return ResponseEntity.ok(courseMapper.courseToDto(courseService.getVersionAt(id, at)));
-	}
+    public ResponseEntity<CourseDto> getVersionAt(@PathVariable int id, @RequestParam OffsetDateTime at) {
+        return ResponseEntity.ok(courseMapper.courseToDto(courseService.getVersionAt(id, at)));
+    }
 
 
     @PutMapping("/{id}/modify")
