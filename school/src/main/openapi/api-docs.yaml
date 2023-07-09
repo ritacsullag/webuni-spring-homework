@@ -69,6 +69,50 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/StudentDto'
+  /api/students/{id}/image:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+    get:
+      tags:
+        - student-controller
+      operationId: getProfilePicture
+      responses:
+        "200":
+          description: OK
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+    delete:
+      tags:
+        - student-controller
+      operationId: deleteProfilePicture
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+        - student-controller
+      operationId: uploadProfilePicture
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        "200":
+          description: OK
   /api/courses/{id}/versions:
     get:
       tags:
