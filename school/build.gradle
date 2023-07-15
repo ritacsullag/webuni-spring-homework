@@ -1,9 +1,12 @@
+import org.codehaus.groovy.runtime.GStringImpl
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.0'
     id 'io.spring.dependency-management' version '1.1.0'
     id "org.hibernate.orm" version "6.2.5.Final"
     id "org.openapi.generator" version "6.6.0"
+    id "io.mateo.cxf-codegen" version "1.2.1"
 }
 
 group = 'com.csullagrita'
@@ -17,6 +20,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    wsimport
 }
 
 repositories {
@@ -58,6 +62,14 @@ dependencies {
     implementation 'org.springframework:spring-websocket'
     implementation 'org.springframework:spring-messaging'
 
+    //jaxws
+    implementation 'com.sun.xml.ws:jaxws-ri:4.0.1'
+    wsimport "com.sun.xml.ws:jaxws-tools:4.0.1"
+    //jaxB and its friends, imports would be great with this
+    implementation "com.sun.xml.ws:jaxws-rt:4.0.1"
+    implementation "javax.xml.ws:jaxws-api:2.3.1"
+    implementation 'org.apache.cxf:cxf-spring-boot-starter-jaxws:4.0.2'
+
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
@@ -76,13 +88,46 @@ dependencies {
 sourceSets {
     main {
         java {
-            srcDirs = ['src/main/java', "${buildDir}/generated/src/main/java/"]
+            srcDirs = ['src/main/java', "${buildDir}/generated/src/main/java/", "${buildDir}/wsdl"]
         }
     }
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+ext {
+    generatedDir = "${buildDir}/wsdl" as GStringImpl
+    generatedSourcesDir = "${generatedDir}/java" as GStringImpl
+}
+
+tasks.register('generateSources') {
+    ext.wsdlFile = "http://localhost:8081/services/students?wsdl"
+    ext.wsdlLocation = "http://localhost:8081/services/students?wsdl"
+    ext.bindingDir = "${projectDir}/src/main/resources/sample/xjb"
+
+    doLast {
+        ant {
+            taskdef name: "wsimport",
+                    classname: "com.sun.tools.ws.ant.WsImport",
+                    classpath: configurations.wsimport.asPath
+
+            mkdir(dir: generatedSourcesDir)
+
+            wsimport(sourcedestdir: generatedSourcesDir,
+                    wsdl: wsdlFile,
+                    wsdlLocation: wsdlLocation,
+                    keep: true,
+                    xnocompile: true) {
+            }
+        }
+    }
+}
+
+compileJava {
+    dependsOn generateSources
+    source generatedSourcesDir
 }
 
 openApiGenerate {
@@ -92,10 +137,10 @@ openApiGenerate {
     apiPackage.set("com.csullagrita.school.api")
     modelPackage.set("com.csullagrita.school.api.model")
     configOptions.set([
-            useTags: true.toString(),
-            dateLibrary: "java8-datetime",
-            configPackage: "com.csullagrita.school.api.model",
-            interfaceOnly: true.toString(),
+            useTags       : true.toString(),
+            dateLibrary   : "java8-datetime",
+            configPackage : "com.csullagrita.school.api.model",
+            interfaceOnly : true.toString(),
             useSpringBoot3: true.toString()
     ])
 }
