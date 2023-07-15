@@ -1,7 +1,6 @@
 package com.csullagrita.school.service;
 
 import com.csullagrita.school.api.model.StudentDto;
-import com.csullagrita.school.aspect.RetryHandler;
 import com.csullagrita.school.exception.SomethingWentWrongException;
 import com.csullagrita.school.mapper.StudentMapper;
 import com.csullagrita.school.repository.StudentRepository;
@@ -55,7 +54,6 @@ public class StudentService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
-    @RetryHandler
     @Transactional
     @Scheduled(cron = "${update.student.used.free.semester.cron}")
     @SchedulerLock(name = "updateUsedSemestersForStudent")
