@@ -36,4 +36,6 @@ public class Student {
     private long centralId;
 
     private Integer usedFreeSemester;
+
+    private int balance;
 }

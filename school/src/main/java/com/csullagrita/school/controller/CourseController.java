@@ -40,9 +40,11 @@ public class CourseController implements CourseControllerApi {
     private final QuerydslPredicateArgumentResolver predicateResolver;
 
     //mert kell egy methodparameter, aminek megmondjuk hanyadik parametere a pageable
-    public void configPageable(@SortDefault("id") Pageable pageable) {}
+    public void configPageable(@SortDefault("id") Pageable pageable) {
+    }
 
-    public void configurePredicate(@QuerydslPredicate(root = Course.class) Predicate predicate) {}
+    public void configurePredicate(@QuerydslPredicate(root = Course.class) Predicate predicate) {
+    }
 
     @Override
     public ResponseEntity<List<CourseDto>> searchCourse(Long id, String name, Boolean full, Integer page, Integer size, List<String> sort) {

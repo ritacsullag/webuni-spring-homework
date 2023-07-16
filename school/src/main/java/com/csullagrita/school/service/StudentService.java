@@ -3,6 +3,7 @@ package com.csullagrita.school.service;
 import com.csullagrita.school.api.model.StudentDto;
 import com.csullagrita.school.exception.SomethingWentWrongException;
 import com.csullagrita.school.mapper.StudentMapper;
+import com.csullagrita.school.model.Student;
 import com.csullagrita.school.repository.StudentRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -110,6 +111,12 @@ public class StudentService {
     @NotNull
     private Path getProfilePicturePath(Integer id) {
         return Path.of(profilePictureFolder, id.toString() + ".jpeg");
+    }
+
+    public void saveStudentPayment(long studentId, int amountOfMoney) {
+        Student student = studentRepository.findById((int) studentId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        student.setBalance(student.getBalance() + amountOfMoney);
+        studentRepository.save(student);
     }
 }
 

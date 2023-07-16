@@ -41,9 +41,9 @@ public class DbInitService {
 
     @Transactional
     public void addInitData() {
-        Student student1 = studentRepository.save(Student.builder().name("Bela").dateOfBirth(LocalDate.of(2020, 8, 17)).semester(1).usedFreeSemester(1).centralId(3456L).build());
-        Student student2 = studentRepository.save(Student.builder().name("Lara").dateOfBirth(LocalDate.of(2021, 1, 21)).semester(1).usedFreeSemester(2).centralId(3457L).build());
-        Student student3 = studentRepository.save(Student.builder().name("Manna").dateOfBirth(LocalDate.of(2020, 12, 19)).semester(2).usedFreeSemester(3).centralId(3476L).build());
+        Student student1 = studentRepository.save(Student.builder().name("Bela").dateOfBirth(LocalDate.of(2020, 8, 17)).semester(1).usedFreeSemester(1).centralId(3456L).balance(30000).build());
+        Student student2 = studentRepository.save(Student.builder().name("Lara").dateOfBirth(LocalDate.of(2021, 1, 21)).semester(1).usedFreeSemester(2).centralId(3457L).balance(25000).build());
+        Student student3 = studentRepository.save(Student.builder().name("Manna").dateOfBirth(LocalDate.of(2020, 12, 19)).semester(2).usedFreeSemester(3).centralId(3476L).balance(20000).build());
 
         Teacher teacher1 = teacherRepository.save(Teacher.builder().name("Klara").dateOfBirth(LocalDate.of(2022, 6, 10)).build());
         Teacher teacher2 = teacherRepository.save(Teacher.builder().name("Karoly").dateOfBirth(LocalDate.of(2000, 6, 10)).build());

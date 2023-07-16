@@ -31,7 +31,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+//    implementation ('org.springframework.boot:spring-boot-starter-web'){
+//        exclude group: "com.sun.xml.bind"
+//    }
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 
@@ -70,6 +72,9 @@ dependencies {
     implementation "javax.xml.ws:jaxws-api:2.3.1"
     implementation 'org.apache.cxf:cxf-spring-boot-starter-jaxws:4.0.2'
 
+    //topic usage async messages
+    implementation 'org.springframework.boot:spring-boot-starter-artemis:3.1.1'
+
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
@@ -105,7 +110,7 @@ ext {
 tasks.register('generateSources') {
     ext.wsdlFile = "http://localhost:8081/services/students?wsdl"
     ext.wsdlLocation = "http://localhost:8081/services/students?wsdl"
-    ext.bindingDir = "${projectDir}/src/main/resources/sample/xjb"
+    ext.bindingDir = "${projectDir}/src/main/java/com/csullagrita/school/wsdl"
 
     doLast {
         ant {
@@ -120,10 +125,18 @@ tasks.register('generateSources') {
                     wsdlLocation: wsdlLocation,
                     keep: true,
                     xnocompile: true) {
+                binding(dir: bindingDir, includes: "*.xml")
+
             }
         }
     }
 }
+
+tasks.register('cleanGenerated', Delete) {
+    delete generatedDir
+}
+
+clean.dependsOn cleanGenerated
 
 compileJava {
     dependsOn generateSources
@@ -144,3 +157,7 @@ openApiGenerate {
             useSpringBoot3: true.toString()
     ])
 }
+//
+//tasks.named('bootJar') {
+//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//}

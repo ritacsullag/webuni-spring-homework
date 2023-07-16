@@ -2,8 +2,8 @@ package com.csullagrita.school.service;
 
 import com.csullagrita.centralsystem.xmlws.SchoolXmlWs;
 import com.csullagrita.centralsystem.xmlws.SchoolXmlWsImplService;
-import com.csullagrita.school.exception.SomethingWentWrongException;
 import com.csullagrita.school.aspect.RetryHandler;
+import com.csullagrita.school.exception.SomethingWentWrongException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
