@@ -2,31 +2,22 @@ package com.csullagrita.school.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Audited
-@Builder
+@SuperBuilder /*use the super class fields as well*/
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @ToString(onlyExplicitlyIncluded = true)
 @Entity
 @Data
 @Cacheable
-public class Student {
-    @Id
-    @GeneratedValue
-    @EqualsAndHashCode.Include()
-    @ToString.Include
-    private long id;
-
-    @ToString.Include
-    private String name;
-
-    private LocalDate dateOfBirth;
+public class Student extends LoginUser{
 
     private int semester;
 
@@ -38,4 +29,9 @@ public class Student {
     private Integer usedFreeSemester;
 
     private int balance;
+
+    @Override
+    public UserType getUserType() {
+        return UserType.STUDENT;
+    }
 }
