@@ -22,9 +22,9 @@ public class JmsConfig {
     @Bean
     public MessageConverter jacksonMessageConverter(ObjectMapper objectMapper) {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        //Because: Caused by: org.springframework.jms.support.converter.MessageConversionException: Failed to resolve type id [com...]
+//        //Because: Caused by: org.springframework.jms.support.converter.MessageConversionException: Failed to resolve type id [com...]
         Map<String, Class<?>> typeIdMappings = new HashMap<>();
-        typeIdMappings.put("JMS_TYPE", PaymentMessage.class);
+        typeIdMappings.put("com.csullagrita.financialservice.model.PaymentMessage", PaymentMessage.class);
         converter.setTypeIdMappings(typeIdMappings);
 
         converter.setTargetType(MessageType.TEXT);

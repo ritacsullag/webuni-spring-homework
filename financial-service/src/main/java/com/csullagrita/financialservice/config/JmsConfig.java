@@ -1,6 +1,5 @@
 package com.csullagrita.financialservice.config;
 
-import com.csullagrita.financialservice.PaymentMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.artemis.api.core.TransportConfiguration;
 import org.apache.activemq.artemis.core.remoting.impl.netty.NettyAcceptorFactory;
@@ -21,9 +20,7 @@ public class JmsConfig {
     @Bean
     public MessageConverter jacksonJmsMessageConverter(ObjectMapper objectMapper) {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        Map<String, Class<?>> typeIdMappings = new HashMap<>();
-        typeIdMappings.put("JMS_TYPE", PaymentMessage.class);
-        converter.setTypeIdMappings(typeIdMappings);
+//      If typeMapping is needed should  be use only the consumer side
         converter.setObjectMapper(objectMapper);
         converter.setTargetType(MessageType.TEXT);
         converter.setTypeIdPropertyName("JMS_TYPE");

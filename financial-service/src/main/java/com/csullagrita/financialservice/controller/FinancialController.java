@@ -1,6 +1,6 @@
 package com.csullagrita.financialservice.controller;
 
-import com.csullagrita.financialservice.PaymentMessage;
+import com.csullagrita.financialservice.model.PaymentMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
