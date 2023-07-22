@@ -1,11 +1,12 @@
 package com.csullagrita.school.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Cacheable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.envers.Audited;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 @Audited

@@ -36,6 +36,7 @@ public abstract class LoginUser {
     private String username;
     private String password;
 
+//    Role is not an entity only a set of Strings:
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    private Set<String> roles;
 

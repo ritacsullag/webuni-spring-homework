@@ -275,3 +275,10 @@ components:
         date:
           type: string
           format: date-time
+    LoginDto:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
