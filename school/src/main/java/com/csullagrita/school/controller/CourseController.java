@@ -8,7 +8,6 @@ import com.csullagrita.school.model.Course;
 import com.csullagrita.school.repository.CourseRepository;
 import com.csullagrita.school.service.CourseService;
 import com.querydsl.core.types.Predicate;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.data.domain.Pageable;
@@ -96,7 +95,7 @@ public class CourseController implements CourseControllerApi {
     }
 
     @Override
-    public ResponseEntity<CourseDto> getVersionAt(Integer id, @NotNull OffsetDateTime at) {
+    public ResponseEntity<CourseDto> getVersionAt(Integer id, OffsetDateTime at) {
         return ResponseEntity.ok(courseMapper.courseToDto(courseService.getVersionAt(id, at)));
     }
 
