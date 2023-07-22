@@ -78,6 +78,7 @@ dependencies {
     //spring security
     implementation 'org.springframework.boot:spring-boot-starter-security:3.1.1'
     implementation 'com.auth0:java-jwt:4.4.0'
+    //Websocket with JWT
     implementation 'org.springframework.security:spring-security-messaging'
 
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
