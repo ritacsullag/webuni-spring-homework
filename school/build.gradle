@@ -80,6 +80,9 @@ dependencies {
     implementation 'com.auth0:java-jwt:4.4.0'
     //Websocket with JWT
     implementation 'org.springframework.security:spring-security-messaging'
+    //oauth2
+    implementation 'org.springframework.security:spring-security-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:3.1.2'
 
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'

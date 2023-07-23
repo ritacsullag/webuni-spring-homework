@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -29,17 +31,22 @@ public class LoginUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         LoginUser loginUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
 
+        return createFacebookUserDetails(loginUser);
+        //JwtService-ben is kell parse-olni
+    }
+
+    public static UserDetails createFacebookUserDetails(LoginUser loginUser) {
         Set<Course> courses = null;
-        if (loginUser instanceof Teacher) {
-            courses = ((Teacher) loginUser).getCourses();
+        if(loginUser instanceof Teacher) {
+            courses = ((Teacher)loginUser).getCourses();
         } else if (loginUser instanceof Student) {
-            courses = ((Student) loginUser).getCourses();
+            courses = ((Student)loginUser).getCourses();
         }
 
-        return new UserInfo(username, loginUser.getPassword(),
-                List.of(new SimpleGrantedAuthority(loginUser.getUserType().toString())),
-                courses.stream().map(course -> (int) course.getId()).toList());
-        //JwtService-ben is kell parse-olni
+        return new UserInfo(loginUser.getUsername(), loginUser.getPassword(),
+                Arrays.asList(new SimpleGrantedAuthority(loginUser.getUserType().toString())),
+                courses == null ? Collections.emptyList() :
+                        courses.stream().map(course -> (int) course.getId()).toList());
     }
 
 }
